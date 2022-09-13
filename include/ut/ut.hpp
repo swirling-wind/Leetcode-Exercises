@@ -983,7 +983,7 @@ inline constexpr auto is_op_v = __is_base_of(detail::op, T);
 }  // namespace type_traits
 
 struct colors {
-// TODO / TOFIX: CLion console not support ANSI Text colorization
+// CLion console does not support ANSI Text colorization
 
 #if (_MSC_VER >= 1500)
     std::string_view none = "\033[0m";
@@ -995,9 +995,6 @@ struct colors {
     std::string_view pass = "";
     std::string_view fail = "";
 #endif
-
-
-
 };
 
 class printer {

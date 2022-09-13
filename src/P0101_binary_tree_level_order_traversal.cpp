@@ -109,8 +109,8 @@ int main()
 	  {
 		  expect(result[i].size() == answer[i].size() >> fatal);
 		  ut::log << "when i:" << i << "\n";
-		  for (size_t j = 0; j < answer.size(); ++j)
-			  expect(result[i][j] == answer[i][j]);
+		  for (size_t j = 0; j < answer[i].size(); ++j)
+			  expect(eq(result[i][j], answer[i][j]));
 	  }
 
 	};
@@ -129,8 +129,8 @@ int main()
 	  {
 		  expect(result[i].size() == answer[i].size() >> fatal);
 		  ut::log << "when i:" << i << "\n";
-		  for (size_t j = 0; j < answer.size(); ++j)
-			  expect(result[i][j] == answer[i][j]);
+		  for (size_t j = 0; j < answer[i].size(); ++j)
+			  expect(eq(result[i][j], answer[i][j]));
 	  }
 
 	};
@@ -149,8 +149,8 @@ int main()
 	  {
 		  expect(result[i].size() == answer[i].size() >> fatal);
 		  ut::log << "when i:" << i << "\n";
-		  for (size_t j = 0; j < answer.size(); ++j)
-			  expect(result[i][j] == answer[i][j]);
+		  for (size_t j = 0; j < answer[i].size(); ++j)
+			  expect(eq(result[i][j], answer[i][j]));
 	  }
 
 	};

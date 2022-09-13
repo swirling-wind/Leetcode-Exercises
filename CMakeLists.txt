@@ -7,8 +7,6 @@ if (MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "/O2")
     add_compile_options(/Wall)
 else()
-    set(CMAKE_EXE_LINKER_FLAGS "-static")
-    set(CMAKE_CXX_FLAGS_DEBUG "-g")
     set(CMAKE_CXX_FLAGS_RELEASE "-O3")
     add_compile_options(-Wall -Wextra -Wpedantic
             -Wcast-qual -Wfloat-equal -Wshadow=global -Wlogical-op -Wcast-align)
