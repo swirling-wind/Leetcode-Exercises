@@ -984,8 +984,7 @@ inline constexpr auto is_op_v = __is_base_of(detail::op, T);
 
 struct colors {
 // CLion console does not support ANSI Text colorization
-
-#if (_MSC_VER >= 1500)
+#if (_MSC_VER >= 1500 && !__clang__)
     std::string_view none = "\033[0m";
     std::string_view pass = "\033[32m";
     std::string_view fail = "\033[31m";

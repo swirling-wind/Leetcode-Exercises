@@ -1,5 +1,4 @@
 #include <common_headers.h>
-
 struct TreeNode
 {
 	int val;
@@ -16,39 +15,38 @@ struct TreeNode
 	}
 };
 
-class Solution
-{// BFS
+class Solution {
 public:
-	vector<vector<int>> levelOrder(TreeNode* root)
-	{
+	vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
 		vector<vector<int>> result;
 		if (root == nullptr)
 		{
 			return result;
 		}
 
-		vector<int> this_depth;
 		queue<TreeNode*> nodes_queue;
 		nodes_queue.push(root);
 		nodes_queue.push(nullptr);
-		// In the nodes_queue, each depth is divided and flagged with a nullptr
+
+		vector<int> same_depth;
+
 		while (!nodes_queue.empty())
 		{
-			TreeNode* current = nodes_queue.front();
+			TreeNode* current{ nodes_queue.front() };
 			nodes_queue.pop();
 
 			if (current == nullptr)
 			{
-				result.emplace_back(this_depth);
-				this_depth.clear();
+				result.emplace_back(same_depth);
+				same_depth.clear();
 				if (!nodes_queue.empty())
 				{
 					nodes_queue.push(nullptr);
 				}
 			}
 			else
-			{
-				this_depth.emplace_back(current->val);
+			{// point to a num
+				same_depth.emplace_back(current->val);
 				if (current->left != nullptr)
 				{
 					nodes_queue.push(current->left);
@@ -57,35 +55,16 @@ public:
 				{
 					nodes_queue.push(current->right);
 				}
+
 			}
 		}
-		return result;
-	}
-};
-
-class DFS_Solution
-{ //DFS
-public:
-	vector<vector<int>> result;
-
-	void scan_per_depth(TreeNode* current_root, int current_depth)
-	{
-		if (current_root == nullptr)
+		for (int i = 0; i < result.size(); ++i)
 		{
-			return;
+			if (i % 2 == 1 && result[i].size() > 1)
+			{
+				std::reverse(result[i].begin(), result[i].end());
+			}
 		}
-		if (static_cast<int>(result.size()) == current_depth)
-		{
-			result.emplace_back(vector<int>());
-		}
-		result[current_depth].emplace_back(current_root->val);
-		scan_per_depth(current_root->left, current_depth + 1);
-		scan_per_depth(current_root->right, current_depth + 1);
-	}
-
-	vector<vector<int>> levelOrder(TreeNode* root)
-	{
-		scan_per_depth(root, 0);
 		return result;
 	}
 };
@@ -97,19 +76,17 @@ int main()
 	{
 		Solution solution;
 		TreeNode* input = new TreeNode{ 3,
-										new TreeNode{ 9 }, new TreeNode{ 20,
-																		 new TreeNode{ 15 }, new TreeNode{ 7 }}
+										new TreeNode{ 9 }, new TreeNode{ 20,new TreeNode{ 15 }, new TreeNode{ 7 }}
 		};
-		auto result = solution.levelOrder(input);
+		auto result = solution.zigzagLevelOrder(input);
 
-		vector<vector<int>> answer{ { 3 }, { 9, 20 }, { 15, 7 } };
+		vector<vector<int>> answer{ { 3 }, { 20, 9 }, { 15, 7 } };
 
 		expect(answer.size() == result.size() >> fatal);
 
 		for (size_t i = 0; i < answer.size(); ++i)
 		{
-			expect(result[i].size() == answer[i].size() >> fatal);
-			ut::log << "when i:" << i << "\n";
+			expect(eq(result[i].size(), answer[i].size()) >> fatal);
 			for (size_t j = 0; j < answer[i].size(); ++j)
 				expect(eq(result[i][j], answer[i][j]));
 		}
@@ -120,7 +97,7 @@ int main()
 	{
 		Solution solution;
 		TreeNode* input = new TreeNode{ 1 };
-		auto result = solution.levelOrder(input);
+		auto result = solution.zigzagLevelOrder(input);
 
 		vector<vector<int>> answer{ { 1 } };
 
@@ -128,8 +105,7 @@ int main()
 
 		for (size_t i = 0; i < answer.size(); ++i)
 		{
-			expect(result[i].size() == answer[i].size() >> fatal);
-			ut::log << "when i:" << i << "\n";
+			expect(eq(result[i].size(), answer[i].size()) >> fatal);
 			for (size_t j = 0; j < answer[i].size(); ++j)
 				expect(eq(result[i][j], answer[i][j]));
 		}
@@ -140,7 +116,7 @@ int main()
 	{
 		Solution solution;
 		TreeNode* input = nullptr;
-		auto result = solution.levelOrder(input);
+		auto result = solution.zigzagLevelOrder(input);
 
 		vector<vector<int>> answer;
 
@@ -148,11 +124,28 @@ int main()
 
 		for (size_t i = 0; i < answer.size(); ++i)
 		{
-			expect(result[i].size() == answer[i].size() >> fatal);
-			ut::log << "when i:" << i << "\n";
+			expect(eq(result[i].size(), answer[i].size()) >> fatal);
 			for (size_t j = 0; j < answer[i].size(); ++j)
 				expect(eq(result[i][j], answer[i][j]));
 		}
+	};
 
+	"4th test"_test = []
+	{
+		Solution solution;
+		TreeNode* input = new TreeNode{ 1,
+			new TreeNode{2, new TreeNode{4}, nullptr}, new TreeNode{3, nullptr, new TreeNode{5}} };
+		auto result = solution.zigzagLevelOrder(input);
+
+		vector<vector<int>> answer{ {1}, {3,2}, {4,5} };
+
+		expect(answer.size() == result.size() >> fatal);
+
+		for (size_t i = 0; i < answer.size(); ++i)
+		{
+			expect(eq(result[i].size(), answer[i].size()) >> fatal);
+			for (size_t j = 0; j < answer[i].size(); ++j)
+				expect(eq(result[i][j], answer[i][j]));
+		}
 	};
 }
