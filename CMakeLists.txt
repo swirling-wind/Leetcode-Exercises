@@ -13,6 +13,6 @@ else()
 endif()
 
 add_executable(Leetcode_Exercises
-       src/P0297_serialize_and_deserialize_binary_tree.cpp)
+      src/P2007_find_original_array_from_doubled_array.cpp)
 set(EXTERNAL_HEADERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include COMPILE_FLAGS "...")
 target_include_directories(Leetcode_Exercises PRIVATE ${EXTERNAL_HEADERS_DIR} )
