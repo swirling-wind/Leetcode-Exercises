@@ -13,6 +13,6 @@ else()
 endif()
 
 add_executable(Leetcode_Exercises
-       "src/P0005_longest_palindromic_substring.cpp")
+       "src/P0034_find_first_and_last_position_of_element_in_sorted_array.cpp")
 set(EXTERNAL_HEADERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include COMPILE_FLAGS "...")
 target_include_directories(Leetcode_Exercises PRIVATE ${EXTERNAL_HEADERS_DIR} )
