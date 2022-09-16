@@ -195,7 +195,7 @@ int main()
 		test("Test_" + std::to_string(i)) = [i, &codec, &test_roots]
 		{ // 3 tests
 			string got_str = codec.serialize(test_roots[i]);
-			std::cout << got_str << "\n\n";
+			std::cout << got_str << "END\n\n";
 			string repeat_str = codec.serialize(codec.deserialize(codec.serialize(test_roots[i])));
 			expect(eq(got_str, repeat_str));
 		};
