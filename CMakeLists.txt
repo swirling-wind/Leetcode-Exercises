@@ -13,6 +13,6 @@ else()
 endif()
 
 add_executable(Leetcode_Exercises
-       src/P1770_maximum_score_from_performing_multiplication_operations.cpp)
+       "src/P0005_longest_palindromic_substring.cpp")
 set(EXTERNAL_HEADERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include COMPILE_FLAGS "...")
 target_include_directories(Leetcode_Exercises PRIVATE ${EXTERNAL_HEADERS_DIR} )
