@@ -59,7 +59,10 @@ int main()
 	expect(trie->search("apple"));   // return True
 	expect(!trie->search("app"));     // return False
 	expect(trie->startsWith("app")); // return True
-	trie->insert("app");
-	expect(trie->search("app"));     // return True
+	should("Insert prefix") = [trie]() mutable
+	{
+		trie->insert("app");
+		expect(trie->search("app"));     // return True
+	};
 
 }
