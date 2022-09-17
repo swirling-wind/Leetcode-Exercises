@@ -1,55 +1,70 @@
 #include <common_headers.h>
 
 class Solution {
-	bool static isPalindrome(const string& str, int i, int j) {
-		while (i < j && str[i] == str[j]) ++i, --j;
-		return i >= j;
+	bool static isPalindrome(const string& str, int i, int j)
+	{
+		while (i < j)
+		{
+			if (str[i++] != str[j--])
+				return false;
+		}
+		cout << "[" << str << "] i:" << i << " , j:" << j << "\n";
+		return true;
 	}
 
 	struct Trie {
 		Trie* next[26] = { nullptr };
 		int end_index = -1;
-		vector<int> palindromeIndexes;
+		vector<int> palindrome_indexes;
 
-		void insert(string& s, int i) {
+		void insert(const string& str, const int index)
+		{
 			Trie* node = this;
-			for (int j = s.size() - 1; j >= 0; --j) {
-				if (isPalindrome(s, 0, j)) node->palindromeIndexes.push_back(i); // A[i]'s prefix forms a palindrome
-				int c = s[j] - 'a';
-				if (!node->next[c]) node->next[c] = new Trie();
-				node = node->next[c];
+			for (int j = str.size() - 1; j >= 0; --j) {
+				if (isPalindrome(str, 0, j))
+				{
+					node->palindrome_indexes.push_back(index); // str's prefix forms a palindrome
+				}
+				const int offset = str[j] - 'a';
+				if (!node->next[offset])
+				{
+					node->next[offset] = new Trie();
+				}
+				node = node->next[offset];
 			}
-			node->end_index = i;
-			node->palindromeIndexes.push_back(i); // A[i]'s prefix is empty string here, which is a palindrome.
+			node->end_index = index;
+			node->palindrome_indexes.push_back(index); // str's prefix is empty string here, which is a palindrome.
 		}
-
 	};
 
 
-
 public:
-	vector<vector<int>> palindromePairs(vector<string>& words) {
+	vector<vector<int>> palindromePairs(vector<string>& words)
+	{
 		Trie* const root = new Trie;
 		const int word_num = static_cast<int>(words.size());
-		for (int i = 0; i < word_num; ++i) 
+		for (int i = 0; i < word_num; ++i)
 			root->insert(words[i], i);
 
 		vector<vector<int>> result;
 
 		for (int i = 0; i < word_num; ++i) {
-			auto s = words[i];
+			const string str = words[i];
 			Trie* node = root;
-			for (int j = 0; j < s.size() && node; ++j) {
-				if (node->end_index != -1 && node->end_index != i && isPalindrome(s, j, s.size() - 1)) result.push_back({ i, node->end_index });
+			for (int j = 0; j < str.size() && node; ++j) {
+				if (node->end_index != -1 && node->end_index != i && isPalindrome(str, j, str.size() - 1)) 
+					result.push_back({ i, node->end_index });
 				// words[i]'s prefix matches this word and words[i]'s suffix forms a palindrome
-				node = node->next[s[j] - 'a'];
+				node = node->next[str[j] - 'a'];
 			}
-			if (!node) continue;
-			for (int j : node->palindromeIndexes) {
+			if (node == nullptr) 
+				continue;
+			for (const int p_index : node->palindrome_indexes) 
+			{
 				// words[i] is exhausted in the matching above. 
 				// If a word whose prefix is palindrome after matching its suffix with words[i], 
 				// then this is also a valid pair
-				if (i != j) result.push_back({ i, j });
+				if (i != p_index) result.push_back({ i, p_index });
 			}
 		}
 		return result;
