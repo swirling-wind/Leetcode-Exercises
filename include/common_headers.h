@@ -8,6 +8,7 @@
 #include <ut/ut.hpp>
 #include <numeric>
 #include <unordered_map>
+using std::priority_queue;
 using std::max;
 using std::min;
 using std::find;
