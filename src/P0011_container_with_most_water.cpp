@@ -3,36 +3,23 @@
 class Solution {
 public:
 	int maxArea(vector<int>&& height) {
-		const int rightest{ static_cast<int>(height.size()) - 1 };
-		int best_i{ 0 }, best_j{ rightest };
-		int best_area{ 0 };
+		int i{ 0 }, j{ static_cast<int>(height.size()) - 1 };
+		int area{ 0 };
 		// scope range: [i, j]
-		for (int i = 0; i < rightest; ++i)
+		while (i < j)
 		{
-			if (height[i] > height[best_i] || i == best_i)
+			if (height[i] < height[j])
 			{
-				for (int j = rightest; j > 0; --j)
-				{
-					cout << i << ":" << j << " -- "   << best_area << " -- " << best_i << ":" << best_j << "\n";
-
-					if (height[j] > height[best_j] || j == best_j)
-					{
-						const int current_area = (j - i) * min(height[i], height[j]);
-						//cout << i << ":" << j << " -- " << current_area << " | " << best_area << " -- " << best_i << ":" << best_j << "\n";
-
-						if (current_area > best_area)
-						{
-							best_area = current_area;
-							best_i = i;
-							best_j = j;
-						}
-					}
-					cout << i << ":" << j << " -- "  << best_area << " -- " << best_i << ":" << best_j << "\n\n";
-
-				}
+				area = max(area, (j - i) * height[i]);
+				++i;
+			}
+			else
+			{
+				area = max(area, (j - i) * height[j]);
+				--j;
 			}
 		}
-		return best_area;
+		return area;
 	}
 };
 
@@ -48,4 +35,6 @@ int main()
 	expect(eq(1200, solution.maxArea({ 100,110, 4,110, 3,6,2,5,4,8,3,7,100,8 })));
 	expect(eq(1, solution.maxArea({ 1,1 })));
 	expect(eq(5, solution.maxArea({ 1,1,1,1,1,1 })));
+	expect(eq(24, solution.maxArea({ 8,8,8,8,3,3,3 })));
+	expect(eq(24, solution.maxArea({ 3,3,3,8,8,8,8,1 })));
 }
