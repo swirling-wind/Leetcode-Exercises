@@ -17,8 +17,6 @@ public:
 	//}
 
 	int findLength(vector<int>&& nums1, vector<int>&& nums2) {
-		
-
 		if (nums1.size() < nums2.size())
 		{
 			std::swap(nums1, nums2);
