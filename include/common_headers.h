@@ -10,6 +10,7 @@
 #include <unordered_map>
 using std::priority_queue;
 using std::stringstream;
+using std::accumulate;
 using std::max;
 using std::min;
 using std::find;

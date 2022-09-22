@@ -13,6 +13,6 @@ else()
 endif()
 
 add_executable(Leetcode_Exercises
-"src/P0985_sum_of_even_numbers_after_queries.cpp")
+  "src/P0179_largest_number.cpp")
 set(EXTERNAL_HEADERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include COMPILE_FLAGS "...")
 target_include_directories(Leetcode_Exercises PRIVATE ${EXTERNAL_HEADERS_DIR} )

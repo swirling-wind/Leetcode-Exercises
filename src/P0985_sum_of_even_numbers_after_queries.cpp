@@ -13,7 +13,6 @@ public:
 				sum += value;
 			}
 		}
-		const int total_length = static_cast<int>(queries.size());
 		for (const auto& item : queries)
 		{
 			if (item[0] % 2 == 0 && nums[item[1]] % 2 == 0)
