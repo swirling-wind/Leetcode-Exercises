@@ -13,6 +13,6 @@ else()
 endif()
 
 add_executable(Leetcode_Exercises
- "src/P0098_validate_binary_search_tree.cpp")
+ "src/P0113_path_sum_2.cpp")
 set(EXTERNAL_HEADERS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include COMPILE_FLAGS "...")
 target_include_directories(Leetcode_Exercises PRIVATE ${EXTERNAL_HEADERS_DIR} )
